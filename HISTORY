@@ -1,0 +1,184 @@
+23 September 1999 - efs-1.0d - ajs [interim]
+
+Temporarily worked-around a bug where reading a file from an efs cd
+sometimes resulted in a small number of blocks containing data from
+other blocks in the buffer cache. This is _not_ a permanent fix -
+I'm still hoping to find out why this happens rather than leaving
+the kludge at the end of file.c in place. Thanks to
+Mark H. Wilkinson <mhw@kremvax.demon.co.uk> for reporting this.
+
+Various other minor cleanups.
+
+
+14 September 1999 - ajs
+
+Added check for fs_cgisize in super.c - <ankry@green.mif.pg.gda.pl>.
+
+Updated patch.linux-2.2. Hopefully the contents of this patch will
+shortly form part of a 2.2 kernel.
+
+
+18 May 1999 - ajs
+
+<R.E.Wolff@bitwizard.nl> noted that the compiler is not guaranteed to
+align int32_t on 32-bit boundaries, and that there were some cases in the
+on-disk structs where this was being assumed.
+
+
+13 May 1999 - ajs
+
+Made EFS less noisy on startup.
+
+
+9 May 1999 - ajs
+
+Added directory name sanity check - <ankry@green.mif.pg.gda.pl>.
+
+
+2 May 1999 - efs-1.0 - ajs [released]
+
+Added KERN_* macros to all printk()s.
+
+
+29 April 1999 - ajs
+
+Minor changes to efs_lookup() for linux 2.2.7. Previous kernels will
+probably issue warnings when compiling dir.c.
+
+Added documentation for CONFIG_EFS_FS in the kernel patch. Supplied by
+<ralf@uni-koblenz.de>.
+
+Updated kernel patch to separate out SGI disklabel option.
+
+
+19 April 1999 - efs-0.99 - ajs [released]
+
+Final patch cleanups.
+
+
+18 April 1999 - ajs
+
+Found a buffer that wasn't being brelse()d in super.c - <willy@bofh.ai>.
+Various other efs_read_super() cleanups - <willy@bofh.ai>.
+Makefile hackery - <willy@bofh.ai>.
+Converted patch.* into unified diffs.
+
+
+17 April 1999 - ajs
+
+Update for linux-2.2.6.
+
+NEWS: The genhd.c patch is now in 2.2.6 and later kernels.
+
+
+15 April 1999 - ajs
+
+There appears to be no good reason to flag a warning where a directory
+has more than one extent. printk()s removed.
+
+
+13 April 1999 - ajs
+
+Fixed block and character device handling. Pipes also tested.
+
+There is still a bug in the block/char device handling. Search
+for "BUG" in inode.c for more details. This bug cannot be resolved
+until linux 2.3 development starts.
+
+Fixed bug in directory handling. It seems that IRIX marks deleted
+directory entries by setting dirblock->space[slot] to zero.
+
+Cosmetic cleanups.
+
+
+12 April 1999 - efs-0.98 - ajs [released]
+
+
+8 April 1999 - ajs
+
+Fixed potential bug when reading filesystem objects of zero length.
+
+
+7 April 1999 - ajs
+
+Added kernel versioning check.
+
+Cleaned up #include statements.
+
+
+2 April 1999 - ajs
+
+Vastly improved handling of indirect extents in inode.c.
+
+Better partition type detection.
+
+
+1 April 1999 - ajs
+
+Removed references to &(inode->u.generic_ip) and &(super->u.generic_sbp)
+in the kernel-patch version of efs.
+
+Removed a couple of unnecessary constants.
+
+Copied volume header checksum verification code from drivers/block/genhd.c
+to efs_validate_vh().
+
+Fixed some Makefile brokenness.
+
+NEWS: The fixes to genhd.c are now in kernel patches, starting with 2.2.5-ac2.
+      They will apparently make it into 2.2.6.
+
+
+31 March 1999 - efs-0.97 - ajs [released]
+
+Fixed efs_statfs() to return more sensible values.
+
+Updated the initialisation functions.
+
+Produced a kernel patch for 2.2 kernels.
+
+
+30 March 1999 - ajs
+
+Reimplemented efs_readdir() to deal with directories with missing entries
+in a more sensible manner.
+
+
+29 March 1999 - ajs
+
+Implemented handling of hard disk partitions. Small changes necessary
+in ${LINUX}/drivers/block/genhd.c to enable the use of sgi_partition()
+on little-endian machines. See the README.
+
+The endianness code now deals with an array of unsigned chars,
+since apparently the endianness of bitfields is undefined.
+
+Reorganised the include files in preparation for integration into
+/usr/src/linux/fs/efs.
+
+
+28 March 1999 - efs-0.96 - ajs [not released]
+
+Attempted to optimise the functions in inode.c to perform inode
+read-ahead. System crashes ensued.
+
+
+26 March 1999 - ajs
+
+Updated endian handling. The icky code necessary for the conversion of
+efs_extent for little-endian machines is now wrapped up in one function
+at the start of inode.c.
+
+The "IRIX 6.2, 6.3 and 6.4 S2MP Recommended/Required Patches" CD contains
+symbolic links. symlink.c is now tested and bug-fixed.
+
+Added TODO and HISTORY.
+
+
+24 March 1999 - efs-0.95 - ajs [released]
+
+Complete rewrite of efsmod-0.6 for linux-2.2.
+
+Improved the handling of raw data blocks (type conversion into structs).
+efs-0.95 is also `endian-clean'.
+

@@ -1,0 +1,4 @@
+Fix block/char device handling for 32-bit dev_t. Search for "BUG" in
+inode.c for more details. This cannot be resolved until linux supports
+a 32-bit dev_t.
+

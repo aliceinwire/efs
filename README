@@ -1,0 +1,95 @@
+Extent File System for Linux 2.2
+================================
+
+This package is an implementation of the SGI's extent filesystem (efs).
+EFS was widely used on IRIX 5.3 systems and is still found on most
+SGI distribution CDs. Since the advent of IRIX 6.x, most people have
+migrated to xfs.
+
+The filesystem is implemented as a loadable module which allows you to
+mount your efs-format CDs onto your Linux system. Support for efs hard
+drive media is in this release (see README.PARTITIONS). The filesystem
+support is read-only in this release.
+
+REQUIREMENTS
+------------
+
+You need to be running at least Linux 2.2.0 to compile this code.
+Your CD-ROM must also be able to read 512-byte blocks.
+
+COMPILATION
+-----------
+
+To build the efs.o module just type "make".
+
+You can insert the module into a running kernel with "insmod efs.o"
+An efs CD can then be mounted using "mount /dev/cd-device /mount/point".
+
+To remove the module, unmount all efs filesystems and enter "rmmod efs".
+
+USING HARD-DISK PARTITIONS
+--------------------------
+
+This module also contains support for hard-drive partitions.
+
+If you are not running Linux/MIPS then you will need to patch your kernel.
+In the Makefile, set KERNEL_TOP appropriately and enter "make genhd".
+Note that the second patch will fail if you have a 2.2.5-ac2 or later kernel.
+
+Once your kernel has been rebuilt and you have reinserted efs.o, you will
+be able to access devices on your irix drive as normal.
+
+KERNEL PATCH
+------------
+
+This version of efs contains a kernel patch. To apply the patch and copy
+the relevant files into your linux kernel tree, edit the Makefile to set
+KERNEL_TOP correctly and enter "make kernel".
+
+Enabling the "experimental code" configuration option will allow you to
+see the CONFIG_FS_EFS option and compile the code either into your kernel,
+or as a module. Note that if you are not running on an SGI (ie CONFIG_SGI
+is not defined) and you wish your kernel to recognise SGI disk labels then
+you must answer Y to CONFIG_SGI_DISKLABEL.
+
+LOCATION
+--------
+
+http://aeschi.ch.eu.org/efs/
+
+WARRANTY
+--------
+
+THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS"
+WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE
+OF THE PROGRAM IS WITH YOU. SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+COPYRIGHT
+---------
+
+This software is released under the terms of the GNU General Public
+License version 2 and is (c) Al Smith 1999.
+
+Portions of the code were inspired by Christian Vogelgsang's efsmod-0.6
+and by Mike Shaver's work on efs support for Linux/MIPS.
+
+THANKS
+------
+
+Thanks go to (in no particular order):
+
+   Ralf Baechle         <ralf@uni-koblenz.de>
+   Tore Bergen         <torel@bergen.sgi.com>
+  Ariel Faigon         <ariel@sgi.com>
+Andrzej Krzysztofowicz <ankry@green.mif.pg.gda.pl>
+   Mike Shaver        <shaver@netscape.com>
+    Ian Wells        <I.Wells@tarragon-et.co.uk>
+Matthew Wilcox         <willy@bofh.ai>
+ Rogier Wolff      <R.E.Wolff@bitwizard.nl>
+
+--
+Al Smith <Al.Smith@aeschi.ch.eu.org> - May 1999
+ 
